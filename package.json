@@ -1,0 +1,9 @@
+{
+  "name": "activity-diagram-layout",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "metrics": "node tests/report.mjs"
+  }
+}

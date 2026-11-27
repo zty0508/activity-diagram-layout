@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "title": "Travel request",
+  "metadata": {
+    "description": "A single-lane sequence."
+  },
+  "lanes": [
+    {
+      "id": "operations",
+      "label": "Operations"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "draft",
+      "label": "Draft request",
+      "laneId": "operations",
+      "type": "initial"
+    },
+    {
+      "id": "check",
+      "label": "Check details",
+      "laneId": "operations",
+      "type": "action"
+    },
+    {
+      "id": "submit",
+      "label": "Submit request",
+      "laneId": "operations",
+      "type": "action"
+    },
+    {
+      "id": "record",
+      "label": "Record decision",
+      "laneId": "operations",
+      "type": "final"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "draft",
+      "target": "check"
+    },
+    {
+      "id": "e2",
+      "source": "check",
+      "target": "submit"
+    },
+    {
+      "id": "e3",
+      "source": "submit",
+      "target": "record"
+    }
+  ]
+}

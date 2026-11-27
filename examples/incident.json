@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "title": "Incident response",
+  "metadata": {
+    "description": "Combines an unfavorable input lane order with branching, parallel paths, a retry loop, and a disconnected node."
+  },
+  "lanes": [
+    {
+      "id": "monitor",
+      "label": "Monitoring"
+    },
+    {
+      "id": "legal",
+      "label": "Compliance"
+    },
+    {
+      "id": "restore",
+      "label": "Operations"
+    },
+    {
+      "id": "respond",
+      "label": "Response team"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "alarm",
+      "label": "Detect incident",
+      "laneId": "monitor",
+      "type": "initial"
+    },
+    {
+      "id": "triage",
+      "label": "Triage incident",
+      "laneId": "respond",
+      "type": "decision"
+    },
+    {
+      "id": "ignore",
+      "label": "Log false alarm",
+      "laneId": "monitor",
+      "type": "action"
+    },
+    {
+      "id": "fork",
+      "label": "Mobilize response",
+      "laneId": "respond",
+      "type": "fork"
+    },
+    {
+      "id": "restoreNode",
+      "label": "Restore service",
+      "laneId": "restore",
+      "type": "action"
+    },
+    {
+      "id": "gather",
+      "label": "Collect evidence",
+      "laneId": "respond",
+      "type": "action"
+    },
+    {
+      "id": "notify",
+      "label": "Notify compliance",
+      "laneId": "legal",
+      "type": "action"
+    },
+    {
+      "id": "verify",
+      "label": "Verify recovery",
+      "laneId": "restore",
+      "type": "decision"
+    },
+    {
+      "id": "report",
+      "label": "Review evidence",
+      "laneId": "legal",
+      "type": "action"
+    },
+    {
+      "id": "join",
+      "label": "Confirm resolution",
+      "laneId": "respond",
+      "type": "join"
+    },
+    {
+      "id": "close",
+      "label": "Close incident",
+      "laneId": "monitor",
+      "type": "final"
+    },
+    {
+      "id": "audit",
+      "label": "Archive case",
+      "laneId": "legal",
+      "type": "final"
+    },
+    {
+      "id": "review",
+      "label": "Review templates",
+      "laneId": "legal",
+      "type": "action"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "alarm",
+      "target": "triage"
+    },
+    {
+      "id": "e2",
+      "source": "triage",
+      "target": "ignore",
+      "label": "False alarm"
+    },
+    {
+      "id": "e3",
+      "source": "triage",
+      "target": "fork",
+      "label": "Incident"
+    },
+    {
+      "id": "e4",
+      "source": "fork",
+      "target": "restoreNode"
+    },
+    {
+      "id": "e5",
+      "source": "fork",
+      "target": "gather"
+    },
+    {
+      "id": "e6",
+      "source": "fork",
+      "target": "notify"
+    },
+    {
+      "id": "e7",
+      "source": "restoreNode",
+      "target": "verify"
+    },
+    {
+      "id": "e8",
+      "source": "verify",
+      "target": "restoreNode",
+      "label": "Retry"
+    },
+    {
+      "id": "e9",
+      "source": "gather",
+      "target": "report"
+    },
+    {
+      "id": "e10",
+      "source": "notify",
+      "target": "report"
+    },
+    {
+      "id": "e11",
+      "source": "verify",
+      "target": "join",
+      "label": "Recovered"
+    },
+    {
+      "id": "e12",
+      "source": "report",
+      "target": "join"
+    },
+    {
+      "id": "e13",
+      "source": "join",
+      "target": "close"
+    },
+    {
+      "id": "e14",
+      "source": "ignore",
+      "target": "close"
+    },
+    {
+      "id": "e15",
+      "source": "close",
+      "target": "audit"
+    }
+  ]
+}

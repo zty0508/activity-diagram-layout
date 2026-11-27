@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "title": "Content release",
+  "metadata": {
+    "description": "Three independent activities run between a fork and a join."
+  },
+  "lanes": [
+    {
+      "id": "team",
+      "label": "Release team"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "label": "Release requested",
+      "laneId": "team",
+      "type": "initial"
+    },
+    {
+      "id": "fork",
+      "label": "Start checks",
+      "laneId": "team",
+      "type": "fork"
+    },
+    {
+      "id": "review",
+      "label": "Review copy",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "scan",
+      "label": "Scan assets",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "test",
+      "label": "Run tests",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "results",
+      "label": "Record test results",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "approved",
+      "label": "Approve copy",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "manifest",
+      "label": "Write manifest",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "join",
+      "label": "Join checks",
+      "laneId": "team",
+      "type": "join"
+    },
+    {
+      "id": "release",
+      "label": "Publish content",
+      "laneId": "team",
+      "type": "final"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "fork"
+    },
+    {
+      "id": "e2",
+      "source": "fork",
+      "target": "review"
+    },
+    {
+      "id": "e3",
+      "source": "fork",
+      "target": "scan"
+    },
+    {
+      "id": "e4",
+      "source": "fork",
+      "target": "test"
+    },
+    {
+      "id": "e5",
+      "source": "review",
+      "target": "approved"
+    },
+    {
+      "id": "e6",
+      "source": "scan",
+      "target": "manifest"
+    },
+    {
+      "id": "e7",
+      "source": "test",
+      "target": "results"
+    },
+    {
+      "id": "e8",
+      "source": "results",
+      "target": "join"
+    },
+    {
+      "id": "e9",
+      "source": "approved",
+      "target": "join"
+    },
+    {
+      "id": "e10",
+      "source": "manifest",
+      "target": "join"
+    },
+    {
+      "id": "e11",
+      "source": "join",
+      "target": "release"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#142338">
+  <meta name="description" content="Lay out, edit, and save UML and SysML activity diagrams.">
+  <title>Activity Studio</title>
+  <link rel="icon" href="./src/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand">
+      <img src="./src/mark.svg" alt="" width="38" height="38">
+      <div>
+        <h1>Activity Studio</h1>
+        <p>UML / SysML diagram editor</p>
+      </div>
+    </div>
+    <div id="save-indicator" class="save-indicator"><span aria-hidden="true"></span><span id="save-text">Ready</span></div>
+  </header>
+
+  <nav class="toolbar" aria-label="Diagram tools">
+    <div class="tool-group">
+      <button id="new" data-icon="file-plus">New Diagram</button>
+      <button id="open" data-icon="folder">Open</button>
+      <button id="examples" data-icon="layers">Load Example</button>
+    </div>
+    <div class="tool-group">
+      <button id="import" data-icon="upload">Import JSON</button>
+      <button id="save" data-icon="save">Save</button>
+      <button id="export" data-icon="download">Export JSON</button>
+    </div>
+    <div class="tool-group">
+      <button id="add-node" data-icon="node">Add Node</button>
+      <button id="add-edge" data-icon="edge" aria-pressed="false">Add Edge</button>
+      <button id="delete" data-icon="trash" disabled>Delete</button>
+    </div>
+    <div class="tool-group compact">
+      <button id="undo" data-icon="undo" aria-label="Undo" title="Undo (Ctrl/⌘+Z)" disabled></button>
+      <button id="redo" data-icon="redo" aria-label="Redo" title="Redo (Ctrl/⌘+Shift+Z)" disabled></button>
+    </div>
+    <button id="auto-layout" class="primary" data-icon="arrange">Auto Layout</button>
+  </nav>
+
+  <main class="workspace">
+    <section class="canvas-panel" aria-labelledby="diagram-heading">
+      <div class="panel-header">
+        <div class="diagram-heading">
+          <p class="eyebrow">Current diagram</p>
+          <h2 id="diagram-heading">Loading diagram…</h2>
+          <p id="diagram-counts" class="diagram-counts"></p>
+        </div>
+        <button id="add-lane" data-icon="lane">Add Swimlane</button>
+      </div>
+      <div id="viewport" class="viewport" tabindex="0" aria-label="Editable activity diagram canvas">
+        <svg id="canvas" width="100%" height="100%" aria-label="Activity diagram">
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0 0 L8 4 L0 8 L2 4 Z" fill="#5e708a"></path>
+            </marker>
+            <marker id="arrow-selected" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0 0 L9 4.5 L0 9 L2 4.5 Z" fill="#007a70"></path>
+            </marker>
+          </defs>
+          <g id="drawing"></g>
+        </svg>
+        <div id="canvas-mode" class="canvas-mode" hidden></div>
+      </div>
+      <div class="canvas-footer">
+        <p id="canvas-hint">Drag nodes to move them. Drag the background to pan.</p>
+        <div class="zoom" aria-label="Canvas zoom and fit">
+          <button id="zoom-out" data-icon="minus" title="Zoom Out" aria-label="Zoom Out"></button>
+          <output id="zoom-level" aria-label="Zoom level">100%</output>
+          <button id="zoom-in" data-icon="plus" title="Zoom In" aria-label="Zoom In"></button>
+          <button id="fit" data-icon="fit" title="Fit to Screen" aria-label="Fit to Screen">Fit</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar" aria-label="Diagram details">
+      <section class="side-card" aria-labelledby="quality-title">
+        <div class="side-heading"><span class="side-icon" data-icon="chart"></span><h2 id="quality-title">Layout Quality</h2></div>
+        <p class="side-description">Compare the input-order baseline with the current arrangement.</p>
+        <table class="metrics">
+          <thead><tr><th scope="col">Metric</th><th scope="col">Naive</th><th scope="col" id="current-metric">Smart</th></tr></thead>
+          <tbody id="metric-rows"></tbody>
+        </table>
+        <p id="metrics-note" class="metrics-note" hidden></p>
+      </section>
+
+      <section class="side-card inspector" aria-labelledby="inspector-title">
+        <div class="side-heading"><span class="side-icon" data-icon="sliders"></span><h2 id="inspector-title">Inspector</h2></div>
+        <div id="inspector-content"></div>
+      </section>
+      <p id="status" class="status" role="status"></p>
+    </aside>
+  </main>
+
+  <input id="file-input" type="file" accept=".json,application/json" hidden>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <form id="dialog-form">
+      <div class="dialog-head">
+        <h2 id="dialog-title"></h2>
+        <button id="dialog-close" type="button" data-icon="close" title="Close" aria-label="Close"></button>
+      </div>
+      <div id="dialog-content"></div>
+      <p id="dialog-error" class="dialog-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button id="dialog-cancel" type="button">Cancel</button>
+        <button id="dialog-submit" class="primary" type="submit">OK</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

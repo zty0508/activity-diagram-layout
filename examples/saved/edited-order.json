@@ -1,0 +1,313 @@
+{
+  "version": 1,
+  "title": "Order fulfillment (edited)",
+  "metadata": {
+    "description": "The lane ordering puts warehouse between the two lanes that communicate at the beginning and end."
+  },
+  "lanes": [
+    {
+      "id": "customer",
+      "label": "Customer",
+      "x": 42,
+      "y": 24,
+      "width": 214,
+      "height": 793
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse",
+      "x": 256,
+      "y": 24,
+      "width": 214,
+      "height": 793
+    },
+    {
+      "id": "operations",
+      "label": "Order operations",
+      "x": 470,
+      "y": 24,
+      "width": 214,
+      "height": 793
+    }
+  ],
+  "nodes": [
+    {
+      "id": "order",
+      "label": "Submit order",
+      "laneId": "customer",
+      "type": "initial",
+      "width": 148,
+      "height": 44,
+      "x": 90,
+      "y": 121
+    },
+    {
+      "id": "validate",
+      "label": "Validate order",
+      "laneId": "operations",
+      "type": "decision",
+      "width": 148,
+      "height": 44,
+      "x": 503,
+      "y": 207
+    },
+    {
+      "id": "payment",
+      "label": "Confirm payment",
+      "laneId": "operations",
+      "type": "action",
+      "width": 148,
+      "height": 44,
+      "x": 503,
+      "y": 311
+    },
+    {
+      "id": "stock",
+      "label": "Check inventory",
+      "laneId": "warehouse",
+      "type": "action",
+      "width": 148,
+      "height": 44,
+      "x": 289,
+      "y": 311
+    },
+    {
+      "id": "ready",
+      "label": "Release order",
+      "laneId": "operations",
+      "type": "join",
+      "width": 148,
+      "height": 44,
+      "x": 503,
+      "y": 415
+    },
+    {
+      "id": "pack",
+      "label": "Pack and dispatch",
+      "laneId": "warehouse",
+      "type": "action",
+      "width": 148,
+      "height": 44,
+      "x": 289,
+      "y": 519
+    },
+    {
+      "id": "track",
+      "label": "Send confirmation",
+      "laneId": "operations",
+      "type": "action",
+      "width": 148,
+      "height": 44,
+      "x": 503,
+      "y": 623
+    },
+    {
+      "id": "receive",
+      "label": "Receive shipment",
+      "laneId": "customer",
+      "type": "final",
+      "width": 148,
+      "height": 44,
+      "x": 75,
+      "y": 727
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "order",
+      "target": "validate",
+      "route": [
+        {
+          "x": 154.2941176470588,
+          "y": 165
+        },
+        {
+          "x": 149,
+          "y": 189
+        },
+        {
+          "x": 577,
+          "y": 189
+        },
+        {
+          "x": 577,
+          "y": 207
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "source": "validate",
+      "target": "payment",
+      "route": [
+        {
+          "x": 559.24,
+          "y": 251
+        },
+        {
+          "x": 559.24,
+          "y": 281
+        },
+        {
+          "x": 577,
+          "y": 281
+        },
+        {
+          "x": 577,
+          "y": 311
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "source": "validate",
+      "target": "stock",
+      "route": [
+        {
+          "x": 594.76,
+          "y": 251
+        },
+        {
+          "x": 594.76,
+          "y": 281
+        },
+        {
+          "x": 363,
+          "y": 281
+        },
+        {
+          "x": 363,
+          "y": 311
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "source": "payment",
+      "target": "ready",
+      "route": [
+        {
+          "x": 577,
+          "y": 355
+        },
+        {
+          "x": 577,
+          "y": 385
+        },
+        {
+          "x": 559.24,
+          "y": 385
+        },
+        {
+          "x": 559.24,
+          "y": 415
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "source": "stock",
+      "target": "ready",
+      "route": [
+        {
+          "x": 363,
+          "y": 355
+        },
+        {
+          "x": 363,
+          "y": 385
+        },
+        {
+          "x": 594.76,
+          "y": 385
+        },
+        {
+          "x": 594.76,
+          "y": 415
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "source": "ready",
+      "target": "pack",
+      "route": [
+        {
+          "x": 577,
+          "y": 459
+        },
+        {
+          "x": 577,
+          "y": 489
+        },
+        {
+          "x": 363,
+          "y": 489
+        },
+        {
+          "x": 363,
+          "y": 519
+        }
+      ]
+    },
+    {
+      "id": "e7",
+      "source": "pack",
+      "target": "track",
+      "route": [
+        {
+          "x": 363,
+          "y": 563
+        },
+        {
+          "x": 363,
+          "y": 593
+        },
+        {
+          "x": 577,
+          "y": 593
+        },
+        {
+          "x": 577,
+          "y": 623
+        }
+      ]
+    },
+    {
+      "id": "e8",
+      "source": "track",
+      "target": "receive",
+      "route": [
+        {
+          "x": 577,
+          "y": 667
+        },
+        {
+          "x": 577,
+          "y": 697
+        },
+        {
+          "x": 149,
+          "y": 697
+        },
+        {
+          "x": 149,
+          "y": 727
+        }
+      ]
+    }
+  ],
+  "layout": {
+    "width": 726,
+    "height": 841,
+    "manual": true,
+    "baseline": {
+      "crossings": 0,
+      "overlaps": 0,
+      "obstructions": 0,
+      "length": 2192,
+      "bends": 12
+    }
+  }
+}

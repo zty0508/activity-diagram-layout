@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "title": "Document review",
+  "metadata": {
+    "description": "Includes backward feedback and a self-loop."
+  },
+  "lanes": [
+    {
+      "id": "team",
+      "label": "Editorial"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "draft",
+      "label": "Prepare draft",
+      "laneId": "team",
+      "type": "initial"
+    },
+    {
+      "id": "review",
+      "label": "Review draft",
+      "laneId": "team",
+      "type": "decision"
+    },
+    {
+      "id": "revise",
+      "label": "Revise draft",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "approve",
+      "label": "Approve draft",
+      "laneId": "team",
+      "type": "action"
+    },
+    {
+      "id": "archive",
+      "label": "Archive draft",
+      "laneId": "team",
+      "type": "final"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "draft",
+      "target": "review"
+    },
+    {
+      "id": "e2",
+      "source": "review",
+      "target": "revise",
+      "label": "Needs changes"
+    },
+    {
+      "id": "e3",
+      "source": "revise",
+      "target": "review"
+    },
+    {
+      "id": "e4",
+      "source": "review",
+      "target": "approve",
+      "label": "Approved"
+    },
+    {
+      "id": "e5",
+      "source": "approve",
+      "target": "approve",
+      "label": "Recheck"
+    },
+    {
+      "id": "e6",
+      "source": "approve",
+      "target": "archive"
+    }
+  ]
+}

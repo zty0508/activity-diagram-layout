@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "title": "Order fulfillment",
+  "metadata": {
+    "description": "The lane ordering puts warehouse between the two lanes that communicate at the beginning and end."
+  },
+  "lanes": [
+    {
+      "id": "customer",
+      "label": "Customer"
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse"
+    },
+    {
+      "id": "operations",
+      "label": "Order operations"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "order",
+      "label": "Submit order",
+      "laneId": "customer",
+      "type": "initial"
+    },
+    {
+      "id": "validate",
+      "label": "Validate order",
+      "laneId": "operations",
+      "type": "decision"
+    },
+    {
+      "id": "payment",
+      "label": "Confirm payment",
+      "laneId": "operations",
+      "type": "action"
+    },
+    {
+      "id": "stock",
+      "label": "Check inventory",
+      "laneId": "warehouse",
+      "type": "action"
+    },
+    {
+      "id": "ready",
+      "label": "Release order",
+      "laneId": "operations",
+      "type": "join"
+    },
+    {
+      "id": "pack",
+      "label": "Pack and dispatch",
+      "laneId": "warehouse",
+      "type": "action"
+    },
+    {
+      "id": "track",
+      "label": "Send confirmation",
+      "laneId": "operations",
+      "type": "action"
+    },
+    {
+      "id": "receive",
+      "label": "Receive order",
+      "laneId": "customer",
+      "type": "final"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "order",
+      "target": "validate"
+    },
+    {
+      "id": "e2",
+      "source": "validate",
+      "target": "payment"
+    },
+    {
+      "id": "e3",
+      "source": "validate",
+      "target": "stock"
+    },
+    {
+      "id": "e4",
+      "source": "payment",
+      "target": "ready"
+    },
+    {
+      "id": "e5",
+      "source": "stock",
+      "target": "ready"
+    },
+    {
+      "id": "e6",
+      "source": "ready",
+      "target": "pack"
+    },
+    {
+      "id": "e7",
+      "source": "pack",
+      "target": "track"
+    },
+    {
+      "id": "e8",
+      "source": "track",
+      "target": "receive"
+    }
+  ]
+}

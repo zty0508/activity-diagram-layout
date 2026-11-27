@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "title": "Access decision",
+  "metadata": {
+    "description": "Branches are deliberately listed in opposite orders on adjacent ranks."
+  },
+  "lanes": [
+    {
+      "id": "access",
+      "label": "Access control"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "request",
+      "label": "Receive request",
+      "laneId": "access",
+      "type": "initial"
+    },
+    {
+      "id": "screen",
+      "label": "Review identity",
+      "laneId": "access",
+      "type": "decision"
+    },
+    {
+      "id": "verify",
+      "label": "Verify access",
+      "laneId": "access",
+      "type": "action"
+    },
+    {
+      "id": "reject",
+      "label": "Reject access",
+      "laneId": "access",
+      "type": "action"
+    },
+    {
+      "id": "notifyRejection",
+      "label": "Send denial alert",
+      "laneId": "access",
+      "type": "action"
+    },
+    {
+      "id": "notifyApproval",
+      "label": "Issue access pass",
+      "laneId": "access",
+      "type": "action"
+    },
+    {
+      "id": "merge",
+      "label": "Record decision",
+      "laneId": "access",
+      "type": "merge"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "request",
+      "target": "screen"
+    },
+    {
+      "id": "e2",
+      "source": "screen",
+      "target": "verify",
+      "label": "Eligible"
+    },
+    {
+      "id": "e3",
+      "source": "screen",
+      "target": "reject",
+      "label": "Ineligible"
+    },
+    {
+      "id": "e4",
+      "source": "verify",
+      "target": "notifyApproval"
+    },
+    {
+      "id": "e5",
+      "source": "reject",
+      "target": "notifyRejection"
+    },
+    {
+      "id": "e6",
+      "source": "notifyApproval",
+      "target": "merge"
+    },
+    {
+      "id": "e7",
+      "source": "notifyRejection",
+      "target": "merge"
+    }
+  ]
+}
